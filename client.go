@@ -65,6 +65,8 @@ type Client interface {
 	// the specified number of milliseconds to wait for existing work to be
 	// completed.
 	Disconnect(quiesce uint)
+	// ForceDisconnect will end the connection with the mqtt broker immediately.
+	ForceDisconnect()
 	// Publish will publish a message with the specified QoS and content
 	// to the specified topic.
 	// Returns a token to track delivery of the message to the broker
@@ -464,7 +466,7 @@ func (c *client) Disconnect(quiesce uint) {
 }
 
 // ForceDisconnect will end the connection with the mqtt broker immediately.
-func (c *client) forceDisconnect() {
+func (c *client) ForceDisconnect() {
 	if !c.IsConnected() {
 		WARN.Println(CLI, "already disconnected")
 		return
